@@ -23,4 +23,9 @@ $(function () {
         socket.emit('stop','stop music command');
     })
 
+    socket.on('users',(data)=>{
+        console.log("user count emit");
+        $('.users').text(data.count + " users Connected");
+    })
+
 });
