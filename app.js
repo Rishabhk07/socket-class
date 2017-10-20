@@ -11,39 +11,41 @@ let first = 0;
 let lastPlayed = 0;
 let lastPosition = 0;
 app.use(express.static(path.join(__dirname, "public")));
-app.get('/',(req,res)=>{
-   res.sendFile(path.join(__dirname, "/public/player.html"))
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/player.html"))
 });
 
-app.get('/start',(req,res)=>{
+app.get('/start', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/playButton.html"))
 })
 
-io.on('connect',(socket)=>{
-   console.log("Socket connected " + socket.id);
-   allSockets.push(socket.id);
+io.on('connect', (socket) => {
+    console.log("Socket connected " + socket.id);
+    allSockets.push(socket.id);
 
-    socket.on('random',()=>{
-       console.log("Random Clicked" + allSockets.indexOf(socket.id));
-       console.log("Socket ID : " + socket.id);
-       if(allSockets.indexOf(socket.id) !== -1){
-           console.log("remove index" + socket.id);
-           let index = allSockets.indexOf(socket.id);
-           allSockets.splice(index,1);
-       }
+
+
+    socket.on('random', () => {
+        console.log("Random Clicked" + allSockets.indexOf(socket.id));
+        console.log("Socket ID : " + socket.id);
+        if (allSockets.indexOf(socket.id) !== -1) {
+            console.log("remove index" + socket.id);
+            let index = allSockets.indexOf(socket.id);
+            allSockets.splice(index, 1);
+        }
         let randomIndex = Math.floor(Math.random() * allSockets.length);
-       let id = allSockets[randomIndex];
-       // console.log("id: " + id);
-       // console.log("all " + allSockets);
+        let id = allSockets[randomIndex];
+        // console.log("id: " + id);
+        // console.log("all " + allSockets);
 
 
-       if(first !== 0 && lastPlayed !== 0 ){
-           console.log("inside get position ")
-           io.to(lastPlayed).emit('get','get Position')
-       }else{
-           console.log("inside first time")
-           io.to(id).emit('play',`{position : ${lastPosition} }`);
-       }
+        if (first !== 0 && lastPlayed !== 0) {
+            console.log("inside get position ")
+            io.to(lastPlayed).emit('get', 'get Position')
+        } else {
+            console.log("inside first time")
+            io.to(id).emit('play', `{position : ${lastPosition} }`);
+        }
         first = 1;
         lastPlayed = id;
 
@@ -55,35 +57,37 @@ io.on('connect',(socket)=>{
         let randomIndex = Math.floor(Math.random() * allSockets.length);
         let id = allSockets[randomIndex];
         console.log(allSockets);
-        io.to(id).emit('seek',`{position : ${seekTo} }`);
+        io.to(id).emit('seek', `{position : ${seekTo} }`);
         lastPlayed = id;
         lastPosition = seekTo;
     })
 
-    socket.on('together',()=>{
+    socket.on('together', () => {
         // if(allSockets[socket.id] !== null){
         //     allSockets[socket.id] = null;
         // }
-        socket.broadcast.emit('seek','play');
+        socket.broadcast.emit('seek', 'play');
     });
 
-    socket.on('stop', ()=>{
+    socket.on('stop', () => {
         // first = 0;
 
         console.log(allSockets);
-        socket.broadcast.emit('stop','stop');
+        socket.broadcast.emit('stop', 'stop');
     })
 
-    socket.on('disconnect',()=>{
+    socket.on('disconnect', () => {
         console.log("Disconected");
         let index = allSockets.indexOf(socket.id);
-        allSockets.splice(index,1);
+        allSockets.splice(index, 1);
         console.log(allSockets);
     })
 
+    socket.broadcast.emit('users', {count: allSockets.length - 1});
+
 });
 
-http.listen('9999',()=>{
+http.listen('9999', () => {
     console.log("Rishabh Khanna")
 });
 
