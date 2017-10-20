@@ -6,11 +6,48 @@
     <script src="socket.io.js"></script>
     <script src="jquery-3.2.1.js"></script>
     <script src="playButton.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<h1>Play Here</h1>
-<input id="random" type="submit" name="Random" title="Random PLay" value="Random PLay"><br>
-<input id="together" type="submit" value="Come Together">
-<input id="stop" type="submit" value="Stop">
+<!--<h1>Play Here</h1>-->
+
+
+
+
+<div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+        <div class="container">
+
+            <div class="masthead clearfix">
+                <div class="container inner">
+                    <h3 class="masthead-brand">Socket.IO Demo</h3>
+                    <nav>
+                        <ul class="nav masthead-nav">
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="inner cover">
+                <h1 class="cover-heading users">0 users connected</h1>
+                <p class="lead"><a style="color: #333333" href="http://github.com/rishabhk07/socket-class">github.com/rishabhk07/socket-class</a></p>
+                <!--<p class="lead">-->
+                    <!--<a href="http://github.com/rishabhk07/socket-class" class="btn btn-lg btn-default">Project Link</a>-->
+                <!--</p>-->
+                <input class="btn btn-outline-danger" id="random" type="submit" name="Random" title="Random PLay" value="Play Next">
+                <!--<input class="btn btn-outline-primary" id="together" type="submit" value="Come Together">-->
+                <input class="btn btn-outline-dark" id="stop" type="submit" value="Stop">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 </body>
 </html>
