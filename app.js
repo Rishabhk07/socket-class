@@ -10,6 +10,7 @@ let allSockets = [];
 let first = 0;
 let lastPlayed = 0;
 let lastPosition = 0;
+var port = process.env.PORT || 9999;
 app.use(express.static(path.join(__dirname, "public")));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/player.html"))
@@ -88,7 +89,7 @@ io.on('connect', (socket) => {
 
 });
 
-http.listen('9999', () => {
+http.listen(port, () => {
     console.log("Rishabh Khanna")
 });
 
