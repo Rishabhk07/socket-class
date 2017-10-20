@@ -6,5 +6,10 @@ $(function () {
     let sound = new Howl({
         src: ['./come_together.mp3']
     });
-    sound.play();
+
+    socket.on('play',function (data) {
+        console.log(data);
+        sound.play();
+    })
+
 });
