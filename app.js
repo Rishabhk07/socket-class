@@ -33,26 +33,43 @@ io.on('connect',(socket)=>{
        }
         let randomIndex = Math.floor(Math.random() * allSockets.length);
        let id = allSockets[randomIndex];
-       console.log("id: " + id);
-       console.log("all " + allSockets);
-       first = 1;
+       // console.log("id: " + id);
+       // console.log("all " + allSockets);
+
+
        if(first !== 0 && lastPlayed !== 0 ){
-           io.to(lastPlayed).emit('getPosition',(function (data) {
-               lastPosition = data;
-           }))
+           console.log("inside get position ")
+           io.to(lastPlayed).emit('get','get Position')
+       }else{
+           console.log("inside first time")
+           io.to(id).emit('play',`{position : ${lastPosition} }`);
        }
+        first = 1;
         lastPlayed = id;
-       io.to(id).emit('play',`{position : ${lastPosition} }`);
+
     });
+
+    socket.on('position', function (data) {
+        console.log(data.position);
+        let seekTo = Math.ceil(data.position);
+        let randomIndex = Math.floor(Math.random() * allSockets.length);
+        let id = allSockets[randomIndex];
+        console.log(allSockets);
+        io.to(id).emit('seek',`{position : ${seekTo} }`);
+        lastPlayed = id;
+        lastPosition = seekTo;
+    })
 
     socket.on('together',()=>{
         // if(allSockets[socket.id] !== null){
         //     allSockets[socket.id] = null;
         // }
-        socket.broadcast.emit('play','play');
+        socket.broadcast.emit('seek','play');
     });
 
     socket.on('stop', ()=>{
+        // first = 0;
+
         console.log(allSockets);
         socket.broadcast.emit('stop','stop');
     })

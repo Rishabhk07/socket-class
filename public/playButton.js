@@ -2,7 +2,7 @@
  * Created by rishabhkhanna on 20/10/17.
  */
 $(function () {
-   let socket = io("http://localhost:9999");
+   let socket = io("http://192.168.1.39:9999");
    let random = $('#random');
    let together = $('#together');
    let stop = $('#stop');
