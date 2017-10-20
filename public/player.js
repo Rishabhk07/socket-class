@@ -12,4 +12,14 @@ $(function () {
         sound.play();
     })
 
+    socket.on('stop', function (data) {
+        console.log(data);
+        sound.pause();
+    })
+
+    // socket.on('getPosition', function (data) {
+    // socket.emit('')
+    //
+    // })
+
 });
