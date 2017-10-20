@@ -81,6 +81,7 @@ io.on('connect', (socket) => {
         let index = allSockets.indexOf(socket.id);
         allSockets.splice(index, 1);
         console.log(allSockets);
+        socket.broadcast.emit('users', {count: allSockets.length - 1});
     })
 
     socket.broadcast.emit('users', {count: allSockets.length - 1});
