@@ -10,7 +10,7 @@ let allSockets = [];
 let first = 0;
 let lastPlayed = 0;
 let lastPosition = 0;
-var port = process.env.PORT || 9999;
+let port = process.env.PORT || 9999;
 app.use(express.static(path.join(__dirname, "public")));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/player.html"))
